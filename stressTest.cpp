@@ -8,13 +8,14 @@ using namespace std;
 #define all(ar) ar.begin(),ar.end()
 #define endl '\n'
 
+
+//------------------------------------------------------------------------------------------------------------//
 struct testcase{
     int n;
-    string s;
+    vector<vector<int>> arr;
 };
 
 int randomNumber(int a,int b){    
-    srand(time(0));
     return a + (rand() % b);
 }
 
@@ -33,30 +34,57 @@ string randomString(const int len) {
     return tmp_s;    
 }
 
-testcase generateTestCase(){
-    testcase randomTest;
-    randomTest.n = randomNumber(1,10);
-    randomTest.s = randomString(randomTest.n);
-    return randomTest;
+vector<vector<int>> randomMatrix(const int n) {
+    srand( time(0));
+    vector<vector<int>> ans(n);
+    for(int i=0;i<n;i++) {
+        for(int j=0;j<n;j++) {
+            int p=randomNumber(1,10);
+            ans[i].push_back(p);           
+        }       
+    }
+
+    return ans;
 }
-string bruteForce(testcase T){
-    reverse(all(T.s));
-    return T.s;
-}
-string optimizedSolution(testcase T){
-    string ans;
-    for(int i=T.s.size()-1;i>=0;i--) {
-        ans.push_back(T.s[i]);
+vector<int> randomArray(const int n) {
+    srand(time(0));
+    vector<int> ans(n);
+    for(int i=0;i<n;i++) {
+        int p=randomNumber(1,10);
+        ans[i]=p;
     }
     return ans;
+}
+testcase generateTestCase(){
+    srand( time(0));
+    testcase randomTest;
+    randomTest.n = randomNumber(2,2);
+    randomTest.arr= randomMatrix(randomTest.n);
+    return randomTest;
+}
+
+
+int bruteForce(testcase T){
+    return 1;
+}
+
+int optimizedSolution(testcase T){
+    return 1;
 }
 
 bool debugger(int &t){
     testcase random = generateTestCase();
-    string  ans1 = bruteForce(random);
-    string ans2 = optimizedSolution(random);
+    int ans1 = bruteForce(random);
+    int ans2 = optimizedSolution(random);
     if(ans1 != ans2) {
         cout<<"WA on testcase "<<t<<endl;
+        for(int i=0;i<random.arr.size();i++) {
+            for(int j=0;j<random.arr.size();j++) {
+                cout<<random.arr[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        cout<<endl;
         cout<<ans1<<" "<<ans2<<endl;
         return false;
     }
